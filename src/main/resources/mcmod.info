@@ -1,0 +1,16 @@
+[
+{
+  "modid": "functionalbits",
+  "name": "Functional Bits",
+  "description": "Adds functionality to Chisels & Bits.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["AffeAli"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
