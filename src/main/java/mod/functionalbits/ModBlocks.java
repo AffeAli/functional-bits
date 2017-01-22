@@ -3,8 +3,10 @@ package mod.functionalbits;
 import mod.functionalbits.block.SimpleFunctionalBlock;
 import mod.functionalbits.tileentity.SimpleFunctionalTileEntity;
 import mod.functionalbits.tileentity.SimpleTESR;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,13 +20,14 @@ public class ModBlocks {
 		
 		simpleFunctionalBlock = new SimpleFunctionalBlock();
 		GameRegistry.register(simpleFunctionalBlock);
-		GameRegistry.register(new ItemBlock(simpleFunctionalBlock), new ResourceLocation("simple_functional_block"));
+		GameRegistry.register(new ItemBlock(simpleFunctionalBlock), simpleFunctionalBlock.getRegistryName());
 		GameRegistry.registerTileEntity(SimpleFunctionalTileEntity.class, "simple_functional_tileentity");
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void preInitClient() {
 		ClientRegistry.bindTileEntitySpecialRenderer(SimpleFunctionalTileEntity.class, new SimpleTESR());
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModFunctionalBits.instance.modBlocks.simpleFunctionalBlock), 0, new ModelResourceLocation("functionalbits" + ":" + "simple_functional_block", "inventory"));
 	}
 
 }

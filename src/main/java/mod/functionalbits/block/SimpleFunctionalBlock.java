@@ -21,6 +21,7 @@ public class SimpleFunctionalBlock extends Block implements ITileEntityProvider 
 	public SimpleFunctionalBlock() {
 		super(Material.ROCK, MapColor.AIR);
 		setRegistryName("simple_functional_block");
+		setUnlocalizedName(getRegistryName().toString());
 	}
 	
 	@Override
