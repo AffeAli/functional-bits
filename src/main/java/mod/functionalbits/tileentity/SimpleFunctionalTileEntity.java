@@ -17,6 +17,7 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 	
 	private ItemStack item;
 	private VoxelBlob blob;
+	int rotX, rotY, rotZ;
 
 	public ItemStack getAsItemStack() {
 		return item;
@@ -38,6 +39,9 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 		super.readFromNBT(compound);
 		NBTTagCompound itemStack = (NBTTagCompound) compound.getTag("structure");
 		if(itemStack != null) setItem(ItemStack.loadItemStackFromNBT(itemStack));
+		rotX = compound.getInteger("rotX");
+		rotY = compound.getInteger("rotY");
+		rotZ = compound.getInteger("rotZ");
 	}
 	
 	@Override
@@ -47,6 +51,9 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 			NBTTagCompound itemTag = item.writeToNBT(new NBTTagCompound());
 			compound.setTag("structure", itemTag);
 		}
+		compound.setInteger("rotX", rotX);
+		compound.setInteger("rotY", rotY);
+		compound.setInteger("rotZ", rotZ);
 		return compound;
 	}
 	
@@ -71,6 +78,34 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 		NBTBlobConverter c = new NBTBlobConverter();
 		c.readChisleData(item.getSubCompound(ModUtil.NBT_BLOCKENTITYTAG, false));
 		blob = c.getBlob();
+	}
+
+	public boolean rotate(EnumFacing axis) {
+		if(item == null) return false;
+		switch (axis) {
+		case UP:
+			rotY += 90;
+			break;
+		case DOWN:
+			rotY += 90;
+			break;
+		case NORTH:
+			rotZ += 90;
+			break;
+		case SOUTH:
+			rotZ += 90;
+			break;
+		case WEST:
+			rotX += 90;
+			break;
+		case EAST:
+			rotX += 90;
+			break;
+		}
+		if(rotX >= 360) rotX -= 360;
+		if(rotY >= 360) rotY -= 360;
+		if(rotZ >= 360) rotZ -= 360;
+		return true;
 	}
 	
 

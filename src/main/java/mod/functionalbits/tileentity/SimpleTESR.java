@@ -24,6 +24,9 @@ public class SimpleTESR extends TileEntitySpecialRenderer<SimpleFunctionalTileEn
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.translate(.5, .5, .5);
+		GlStateManager.rotate(te.rotX, 1, 0, 0);
+		GlStateManager.rotate(te.rotY, 0, 1, 0);
+		GlStateManager.rotate(te.rotZ, 0, 0, 1);
 		if(te.getAsItemStack() != null) {
 			GlStateManager.scale(2, 2, 2);
 			Minecraft.getMinecraft().getRenderItem().renderItem(te.getAsItemStack(), ItemCameraTransforms.TransformType.NONE);

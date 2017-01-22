@@ -63,7 +63,7 @@ public class SimpleFunctionalBlock extends Block implements ITileEntityProvider 
 	
 	@Override
 	public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
-		return super.rotateBlock(world, pos, axis);
+		return ((SimpleFunctionalTileEntity) world.getTileEntity(pos)).rotate(axis);
 	}
 	
 	
