@@ -13,6 +13,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class SimpleFunctionalBlock extends Block implements ITileEntityProvider {
@@ -20,6 +21,12 @@ public class SimpleFunctionalBlock extends Block implements ITileEntityProvider 
 	public SimpleFunctionalBlock() {
 		super(Material.ROCK, MapColor.AIR);
 		setRegistryName("simple_functional_block");
+	}
+	
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		SimpleFunctionalTileEntity te = (SimpleFunctionalTileEntity) world.getTileEntity(pos);
+		return te.getLight();
 	}
 	
 	@Override
