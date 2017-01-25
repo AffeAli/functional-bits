@@ -5,9 +5,14 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = "functionalbits")
 public class ModFunctionalBits {
+	
+	public static final String VERSION = "";
+	public static final String MODID = "functionalbits";
 	
 	public ModBlocks modBlocks;
 	public ModItems modItems;
@@ -17,6 +22,7 @@ public class ModFunctionalBits {
 	serverSide="mod.functionalbits.CommonProxy")
 	public static CommonProxy proxy;
 	public static ModFunctionalBits instance;
+	public static final SimpleNetworkWrapper NETWORK_WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	
 	public ModFunctionalBits() {
 		instance = this;
@@ -29,6 +35,7 @@ public class ModFunctionalBits {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		proxy.init();
 		modBlocks.registerRecipies();
 	}
 	
