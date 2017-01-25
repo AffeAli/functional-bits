@@ -37,6 +37,7 @@ public class ModFunctionalBits {
 	public void init(FMLInitializationEvent event) {
 		proxy.init();
 		modBlocks.registerRecipies();
+		modItems.registerRecipies();
 	}
 	
 }

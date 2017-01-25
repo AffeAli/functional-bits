@@ -1,6 +1,8 @@
 package mod.functionalbits.item;
 
+import mod.functionalbits.ModFunctionalBits;
 import mod.functionalbits.interfaces.RemoteBlockContainer;
+import mod.functionalbits.network.SetRemoteBlockPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,11 +26,13 @@ public class ItemFunctionalBinder extends Item {
 	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos,
 			EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
 		try {
-			((RemoteBlockContainer) worldIn.getTileEntity(pos)).setRemoteBlock(getSavedPos(stack));
+			if(!((RemoteBlockContainer) worldIn.getTileEntity(pos)).setRemoteBlock(getSavedPos(stack))) return EnumActionResult.FAIL;
 			stack.damageItem(1, playerIn);
+			ModFunctionalBits.NETWORK_WRAPPER.sendToServer(new SetRemoteBlockPacket(pos, getSavedPos(stack)));
 		}
 		catch(ClassCastException | NullPointerException e) {
 			savePos(stack, pos);
+			ModFunctionalBits.NETWORK_WRAPPER.sendToServer(new SetRemoteBlockPacket(pos, BlockPos.ORIGIN));
 		}
 		return EnumActionResult.SUCCESS;
 	}

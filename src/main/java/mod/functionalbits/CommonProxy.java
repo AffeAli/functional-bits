@@ -13,6 +13,7 @@ public class CommonProxy {
 	}
 	
 	public void init() {
+		ModFunctionalBits.NETWORK_WRAPPER.registerMessage(SetRemoteBlockPacket.Handler.class, SetRemoteBlockPacket.class, 0, Side.SERVER);
 	}
 
 }

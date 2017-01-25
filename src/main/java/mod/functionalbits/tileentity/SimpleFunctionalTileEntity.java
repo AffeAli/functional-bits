@@ -32,7 +32,8 @@ public class SimpleFunctionalTileEntity extends TileEntity implements RemoteBloc
 	}
 
 	public boolean rightClickAction(EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		BlockPos newPos = getPos().down();
+		//BlockPos newPos = getPos().down();
+		BlockPos newPos = getRemoteBlockPos();
 		System.out.println(remoteBlock);
 		return getWorld().getBlockState(newPos).getBlock().onBlockActivated(getWorld(), newPos, getWorld().getBlockState(newPos), playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
