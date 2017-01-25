@@ -10,6 +10,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit() {
 		super.preInit();
 		ModFunctionalBits.instance.modBlocks.preInitClient();
+		ModFunctionalBits.instance.modItems.preInitClient();
 	}
 
 }

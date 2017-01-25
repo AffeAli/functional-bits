@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ModFunctionalBits {
 	
 	public ModBlocks modBlocks;
+	public ModItems modItems;
 
 	@SidedProxy(
 	clientSide="mod.functionalbits.ClientProxy", 
