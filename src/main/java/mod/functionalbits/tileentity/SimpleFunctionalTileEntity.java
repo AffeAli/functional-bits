@@ -3,6 +3,7 @@ package mod.functionalbits.tileentity;
 import mod.chiselsandbits.chiseledblock.NBTBlobConverter;
 import mod.chiselsandbits.chiseledblock.data.VoxelBlob;
 import mod.chiselsandbits.helpers.ModUtil;
+import mod.functionalbits.interfaces.RemoteBlockContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,11 +14,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 
-public class SimpleFunctionalTileEntity extends TileEntity {
+public class SimpleFunctionalTileEntity extends TileEntity implements RemoteBlockContainer {
 	
 	private ItemStack item;
 	private VoxelBlob blob;
 	int rotX, rotY, rotZ;
+	private BlockPos remoteBlock = null;
 
 	public ItemStack getAsItemStack() {
 		return item;
@@ -30,7 +32,8 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 	}
 
 	public boolean rightClickAction(EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		BlockPos newPos = pos.add(0, -1, 0);
+		BlockPos newPos = getPos().down();
+		System.out.println(remoteBlock);
 		return getWorld().getBlockState(newPos).getBlock().onBlockActivated(getWorld(), newPos, getWorld().getBlockState(newPos), playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
@@ -42,6 +45,7 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 		rotX = compound.getInteger("rotX");
 		rotY = compound.getInteger("rotY");
 		rotZ = compound.getInteger("rotZ");
+		remoteBlock = new BlockPos(compound.getInteger("remoteX"), compound.getInteger("remoteY"), compound.getInteger("remoteZ"));
 	}
 	
 	@Override
@@ -54,6 +58,9 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 		compound.setInteger("rotX", rotX);
 		compound.setInteger("rotY", rotY);
 		compound.setInteger("rotZ", rotZ);
+		compound.setInteger("remoteX", getRemoteBlockPos().getX());
+		compound.setInteger("remoteY", getRemoteBlockPos().getY());
+		compound.setInteger("remoteZ", getRemoteBlockPos().getZ());
 		return compound;
 	}
 	
@@ -106,6 +113,20 @@ public class SimpleFunctionalTileEntity extends TileEntity {
 		if(rotY >= 360) rotY -= 360;
 		if(rotZ >= 360) rotZ -= 360;
 		return true;
+	}
+
+	@Override
+	public boolean setRemoteBlock(BlockPos pos) {
+		if(pos != null && pos.distanceSq(getPos()) < 50) {
+			remoteBlock = pos;
+			markDirty();
+			return true;
+		}
+		return false;
+	}
+	
+	private BlockPos getRemoteBlockPos() {
+		return remoteBlock != null ? remoteBlock : getPos().down();
 	}
 	
 
