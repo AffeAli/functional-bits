@@ -36,7 +36,8 @@ minecraft {
 dependencies {
     deobfCompile "mezz.jei:${jei_version}"
     deobfCompile "MCMultiPart:${mcmp_version}"
-    deobfCompile "mod.chiselsandbits:${chiselsandbits_version}"
+    //deobfCompile "mod.chiselsandbits:${chiselsandbits_version}"
+	compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 processResources

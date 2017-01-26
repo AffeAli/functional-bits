@@ -84,7 +84,7 @@ public class SimpleFunctionalTileEntity extends TileEntity implements RemoteBloc
 	private void setItem(ItemStack newItem) {
 		item = newItem;
 		NBTBlobConverter c = new NBTBlobConverter();
-		c.readChisleData(item.getSubCompound(ModUtil.NBT_BLOCKENTITYTAG, false));
+		c.readChisleData(item.getSubCompound(ModUtil.NBT_BLOCKENTITYTAG, false), VoxelBlob.VERSION_ANY);
 		blob = c.getBlob();
 	}
 
